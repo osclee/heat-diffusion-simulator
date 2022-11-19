@@ -28,7 +28,12 @@ public class TileManager {
 
         for(int row = 0; row < rows; row++) {
             for(int column = 0; column < columns; column++) {
-                g2.setColor(determineColor(gamePanel.getHeatDiffusion().getDiffusionMap()[gamePanel.getCurrentIteration()][row][column]));
+
+                if (gamePanel.getHeatDiffusion() == null) {
+                    g2.setColor(Color.LIGHT_GRAY);
+                } else {
+                    g2.setColor(determineColor(gamePanel.getHeatDiffusion().getDiffusionMap()[gamePanel.getCurrentIteration()][row][column]));
+                }
                 g2.fillRect(startingX + (tileWidth * row), startingY + (tileHeight * column), tileWidth, tileHeight);
             }
         }

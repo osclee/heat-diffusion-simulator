@@ -7,15 +7,15 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    private final int screenWidth = 1200, screenHeight = 1200;
+    private final int screenWidth = 800, screenHeight = 600;
 
-    private int mapHeight = 60;
-    private int mapWidth = 60;
+    private int mapHeight = 20;
+    private int mapWidth = 20;
 
-    private double sourceTemperature = 200;
-    private int sourceTemperatureRow = 30;
+    private double sourceTemperature = 100;
+    private int sourceTemperatureRow = 0;
     private int sourceTemperatureColumn = -1;
-    private int iterations = 100000;
+    private int iterations = 200;
 
     private Thread gameThread;
 
@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     private TileManager tileManager;
 
-    private int iterationsPerSecond = 120;
+    private int iterationsPerSecond = 2;
 
     private int currentIteration = 0;
 
@@ -34,17 +34,72 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.setFocusable(true);
 
-        tileManager = new TileManager(this);
+        //tileManager = new TileManager(this);
+    }
+
+    public void updateGameSettings(int mapHeight, int mapWidth, double sourceTemperature, int sourceTemperatureRow, int sourceTemperatureCol, int iterations) {
+        this.mapHeight = mapHeight;
+        this.mapWidth = mapWidth;
+        this.sourceTemperature = sourceTemperature;
+        this.sourceTemperatureRow = sourceTemperatureRow;
+        this.sourceTemperatureColumn = sourceTemperatureCol;
+        this.iterations = iterations;
+    }
+
+    public void play() {
+
+        if (currentIteration > 0) {
+            resumeGameThread();
+        } else {
+            if (heatDiffusion == null) {
+                tileManager = new TileManager(this);
+                heatDiffusion = new HeatDiffusion(mapHeight, mapWidth, sourceTemperature, sourceTemperatureRow, sourceTemperatureColumn, iterations);
+                heatDiffusion.runSimulation();
+            }
+
+            startGameThread();
+        }
+
+    }
+
+    public void pause() {
+        //try {
+            pauseGameThread();
+       // } catch (InterruptedException e) {
+        //    throw new RuntimeException(e);
+        //}
+    }
+
+    public void restart() {
+        currentIteration = 0;
     }
 
     public void setupGame() {
-        heatDiffusion = new HeatDiffusion(mapHeight, mapWidth, sourceTemperature, sourceTemperatureRow, sourceTemperatureColumn, iterations);
+        //heatDiffusion = new HeatDiffusion(mapHeight, mapWidth, sourceTemperature, sourceTemperatureRow, sourceTemperatureColumn, iterations);
         heatDiffusion.runSimulation();
     }
 
-    public void startGameThread() {
+    private void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    // TODO: Fix...
+    private void pauseGameThread() {//throws InterruptedException{
+
+        synchronized (gameThread){
+            try{
+                gameThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //gameThread.wait();
+    }
+
+    private void resumeGameThread() {
+        gameThread.notify();
     }
 
     private void update() {
@@ -59,7 +114,11 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;
-        tileManager.draw(g2);
+
+        if (tileManager != null) {
+            tileManager.draw(g2);
+        }
+
         g2.dispose();
     }
 

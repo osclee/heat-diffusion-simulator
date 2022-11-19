@@ -26,7 +26,6 @@ public class HeatDiffusion {
         initDiffusionMap();
     }
 
-
     private void initDiffusionMap() {
         double initialTemperature = 50.0;
 
