@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class TileManager {
 
-    private GamePanel gamePanel;
+    private final GamePanel gamePanel;
 
     public TileManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
