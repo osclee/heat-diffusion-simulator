@@ -32,8 +32,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
 
-        //keyH = new KeyHandler();
-        //this.addKeyListener(keyH);
         this.setFocusable(true);
 
         tileManager = new TileManager(this);
@@ -51,13 +49,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     private void update() {
         if (currentIteration < iterations) {
-            //System.out.println("Current Iteration : " + currentIteration);
             currentIteration++;
         } else if (currentIteration == iterations) {
             System.out.println("Simulation ended. Final iteration: " + currentIteration);
         }
-
-
     }
 
     public void paintComponent(Graphics g) {

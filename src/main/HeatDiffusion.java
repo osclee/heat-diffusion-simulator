@@ -1,6 +1,5 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class HeatDiffusion {
@@ -15,6 +14,8 @@ public class HeatDiffusion {
 
     private int mapHeight = 10, mapWidth = 10;
 
+    private double lowestTemperature = Double.MAX_VALUE;
+
     public HeatDiffusion(int mapHeight, int mapWidth, double sourceTemperature, int sourceTemperatureRow, int sourceTemperatureCol, int iterations) {
         this.mapHeight = mapHeight;
         this.mapWidth = mapWidth;
@@ -25,15 +26,6 @@ public class HeatDiffusion {
         initDiffusionMap();
     }
 
-    /*public HeatDiffusion(int mapHeight, int mapWidth, double sourceTemperature, int sourceTemperatureRow, int sourceTemperatureCol, int iterations, double[][] initialTemperatures) {
-        this.mapHeight = mapHeight;
-        this.mapWidth = mapWidth;
-        this.sourceTemperature = sourceTemperature;
-        this.sourceTemperatureRow = sourceTemperatureRow;
-        this.sourceTemperatureCol = sourceTemperatureCol;
-        this.iterations = iterations;
-        initDiffusionMap(initialTemperatures);
-    }*/
 
     private void initDiffusionMap() {
         double initialTemperature = 50.0;
@@ -46,16 +38,6 @@ public class HeatDiffusion {
             }
         }
     }
-
-    /*private void initDiffusionMap(double[][] initialTemperatures) {
-        diffusionMap = new double[iterations + 1][][];
-
-        for (int i = 0; i < diffusionMap.length; i++) {
-            diffusionMap[i] = initialTemperatures.clone();
-        }
-
-        //Arrays.fill(diffusionMap, initialTemperatures);
-    }*/
 
     public void runSimulation() {
         System.out.println("Running simulation");
@@ -148,16 +130,16 @@ public class HeatDiffusion {
     }
 
     public double getLowestTemperature() {
-        double lowestTemperature = Double.MAX_VALUE;
 
-        for (double [] row : diffusionMap[0]) {
-            for (double column : row) {
-                if (column < lowestTemperature) {
-                    lowestTemperature = column;
+        if (lowestTemperature == Double.MAX_VALUE) {
+            for (double [] row : diffusionMap[0]) {
+                for (double column : row) {
+                    if (column < lowestTemperature) {
+                        lowestTemperature = column;
+                    }
                 }
             }
         }
-
         return lowestTemperature;
     }
 
