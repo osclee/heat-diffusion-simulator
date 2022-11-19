@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     private TileManager tileManager;
 
-    private int iterationsPerSecond = 2;
+    private int iterationsPerSecond = 120;
 
     private int currentIteration = 0;
 
@@ -37,13 +37,14 @@ public class GamePanel extends JPanel implements Runnable {
         //tileManager = new TileManager(this);
     }
 
-    public void updateGameSettings(int mapHeight, int mapWidth, double sourceTemperature, int sourceTemperatureRow, int sourceTemperatureCol, int iterations) {
+    public void updateGameSettings(int mapHeight, int mapWidth, double sourceTemperature, int sourceTemperatureRow, int sourceTemperatureCol, int iterations, int simulationSpeed) {
         this.mapHeight = mapHeight;
         this.mapWidth = mapWidth;
         this.sourceTemperature = sourceTemperature;
         this.sourceTemperatureRow = sourceTemperatureRow;
         this.sourceTemperatureColumn = sourceTemperatureCol;
         this.iterations = iterations;
+        this.iterationsPerSecond = simulationSpeed;
     }
 
     public void play() {

@@ -14,12 +14,14 @@ public class SettingsForm extends JFrame implements ActionListener {
     private JTextField numberIterationsField;
     private JButton cancelButton;
     private JButton okButton;
+    private JSlider slider1;
 
     private final GamePanel gamePanel;
 
     public SettingsForm(GamePanel gamePanel) {
         this.setContentPane(panel);
         this.setTitle("Heat Diffusion Game Settings");
+
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -28,7 +30,6 @@ public class SettingsForm extends JFrame implements ActionListener {
         cancelButton.addActionListener(this);
 
         this.gamePanel = gamePanel;
-
     }
 
     private void updateGamePanelGameSettings() {
@@ -41,8 +42,9 @@ public class SettingsForm extends JFrame implements ActionListener {
         int sourceTempCol = Integer.parseInt(sourceTempColumnField.getText());
 
         int iterations = Integer.parseInt(numberIterationsField.getText());
+        int iterationSpeed = slider1.getValue();
 
-        gamePanel.updateGameSettings(mapHeight, mapWidth, sourceTemp, sourceTempRow, sourceTempCol, iterations);
+        gamePanel.updateGameSettings(mapHeight, mapWidth, sourceTemp, sourceTempRow, sourceTempCol, iterations, iterationSpeed);
     }
 
     @Override
