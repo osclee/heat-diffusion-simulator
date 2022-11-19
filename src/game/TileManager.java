@@ -28,20 +28,8 @@ public class TileManager {
 
         for(int row = 0; row < rows; row++) {
             for(int column = 0; column < columns; column++) {
-
-
                 g2.setColor(determineColor(gamePanel.getHeatDiffusion().getDiffusionMap()[gamePanel.getCurrentIteration()][row][column]));
-
                 g2.fillRect(startingX + (tileWidth * row), startingY + (tileHeight * column), tileWidth, tileHeight);
-
-                //g2.setColor(new Color(ThreadLocalRandom.current().nextInt(0, 255 + 1), ThreadLocalRandom.current().nextInt(0, 255 + 1), ThreadLocalRandom.current().nextInt(0, 255 + 1)));
-                //g2.setColor(new Color(ThreadLocalRandom.current().nextInt(0, 255 + 1), ThreadLocalRandom.current().nextInt(0, 255 + 1), 0));
-                //g2.fillRect(startingX + (tileWidth * row), startingY + (tileHeight * column), tileWidth, tileHeight);
-//                if (ThreadLocalRandom.current().nextBoolean()) {
-//                    g2.fillRect(startingX + (tileWidth * row), startingY + (tileHeight * column), tileWidth, tileHeight);
-//                } else {
-//                    g2.drawRect(startingX + (tileWidth * row), startingY + (tileHeight * column), tileWidth, tileHeight);
-//                }
             }
         }
     }
@@ -97,8 +85,7 @@ public class TileManager {
             return new Color(0, 0, 0);
         }
 
-        // 50 - 100
-        //return new Color(255, 0, 0);
+        // Potential future usage.
         //return new Color((int)(255 * percent), (int)(255 * percent), (int)((255 / 2) * (1 - percent)));
     }
 }
