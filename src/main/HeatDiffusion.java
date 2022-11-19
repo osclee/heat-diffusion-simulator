@@ -118,7 +118,6 @@ public class HeatDiffusion {
     }
 
     private boolean isTileAdjacentToTempSource(int tileRow, int tileCol) {
-        System.out.println("Checking " + tileRow + " : " + tileCol);
         return (tileRow - 1 == sourceTemperatureRow && tileCol == sourceTemperatureCol)
                 || (tileRow + 1 == sourceTemperatureRow &&  tileCol == sourceTemperatureCol)
                 || (tileCol - 1 == sourceTemperatureCol && tileRow == sourceTemperatureRow)
@@ -138,6 +137,28 @@ public class HeatDiffusion {
             }
             iter++;
         }
+    }
+
+    public double[][][] getDiffusionMap() {
+        return diffusionMap;
+    }
+
+    public double getHighestTemperature() {
+        return sourceTemperature;
+    }
+
+    public double getLowestTemperature() {
+        double lowestTemperature = Double.MAX_VALUE;
+
+        for (double [] row : diffusionMap[0]) {
+            for (double column : row) {
+                if (column < lowestTemperature) {
+                    lowestTemperature = column;
+                }
+            }
+        }
+
+        return lowestTemperature;
     }
 
 }
