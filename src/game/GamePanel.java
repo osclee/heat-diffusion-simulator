@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements Runnable {
     private double sourceTemperature = 100;
     private int sourceTemperatureRow = 0;
     private int sourceTemperatureColumn = -1;
-    private int iterations = 200;
+    private int iterations = 5;
 
     private Thread gameThread;
 
@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     private TileManager tileManager;
 
-    private int iterationsPerSecond = 120;
+    private int iterationsPerSecond = 1;
 
     private int currentIteration = 0;
 
@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.setFocusable(true);
 
-        //tileManager = new TileManager(this);
+        tileManager = new TileManager(this);
     }
 
     public void updateGameSettings(int mapHeight, int mapWidth, double sourceTemperature, int sourceTemperatureRow, int sourceTemperatureCol, int iterations, int simulationSpeed) {
@@ -45,21 +45,26 @@ public class GamePanel extends JPanel implements Runnable {
         this.sourceTemperatureColumn = sourceTemperatureCol;
         this.iterations = iterations;
         this.iterationsPerSecond = simulationSpeed;
+        heatDiffusion = new HeatDiffusion(mapHeight, mapWidth, sourceTemperature, sourceTemperatureRow, sourceTemperatureColumn, iterations);
+        heatDiffusion.runSimulation();
+        //tileManager = new TileManager(this);
     }
 
     public void play() {
 
         if (currentIteration > 0) {
-            resumeGameThread();
+            //resumeGameThread();
         } else {
             if (heatDiffusion == null) {
-                tileManager = new TileManager(this);
+                //tileManager = new TileManager(this);
                 heatDiffusion = new HeatDiffusion(mapHeight, mapWidth, sourceTemperature, sourceTemperatureRow, sourceTemperatureColumn, iterations);
                 heatDiffusion.runSimulation();
             }
 
             startGameThread();
         }
+
+        startGameThread();
 
     }
 
@@ -108,6 +113,7 @@ public class GamePanel extends JPanel implements Runnable {
             currentIteration++;
         } else if (currentIteration == iterations) {
             System.out.println("Simulation ended. Final iteration: " + currentIteration);
+            gameThread = null;
         }
     }
 
@@ -116,9 +122,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D)g;
 
-        if (tileManager != null) {
-            tileManager.draw(g2);
-        }
+
+
+        tileManager.draw(g2);
 
         g2.dispose();
     }

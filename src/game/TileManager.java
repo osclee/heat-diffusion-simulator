@@ -14,11 +14,13 @@ public class TileManager {
 
     public void draw(Graphics2D g2) {
 
-        int startingX = 100;
-        int startingY = 100;
+        int margin = 50;
 
-        int endingX = gamePanel.getScreenWidth() - 100;
-        int endingY = gamePanel.getScreenHeight() - 100;
+        int startingX = margin;
+        int startingY = margin;
+
+        int endingX = gamePanel.getScreenWidth() - margin;
+        int endingY = gamePanel.getScreenHeight() - margin;
 
         int rows = gamePanel.getMapWidth();
         int columns = gamePanel.getMapHeight();
